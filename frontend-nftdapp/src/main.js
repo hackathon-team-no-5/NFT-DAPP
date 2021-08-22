@@ -13,9 +13,6 @@ Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
 
-//mixin -> web3&config instance
-//each component -> this.$web3 || this.$config access
-
 Vue.mixin({
   created() {
   	const web3js = window.web3

@@ -12,7 +12,7 @@
     </v-toolbar>
     <v-content class="contentWrapper">
       <v-container fluid>
-        <router-view></router-view>//routing page rendering
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>

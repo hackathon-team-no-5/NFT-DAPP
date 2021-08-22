@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-form class="form" ref="form">      
-      <v-text-field v-model="tokenid"> </v-text-field>
+      <v-text-field
+      	v-model="tokenid"
+      	></v-text-field>
 
         <v-text-field
             v-model="auction.auctionTitle"
@@ -21,7 +23,6 @@
     </v-form>
   </div>
 </template>
-
 <script>
 export default {
   props: ['tokenid', 'metadata'],
@@ -38,10 +39,10 @@ export default {
     }
   },
 
-async mounted() {    
+  async mounted() {    
     this.account = await this.$getDefaultAccount()
     this.contractInstance = this.$web3.eth.contract(this.$config.AUCTIONS_ABI).at(this.$config.AUCTIONS_CA)
-},
+  },
 
   methods: {
     async createAuction() {     
@@ -51,11 +52,9 @@ async mounted() {
       }
 
       const price = this.$web3.toWei(this.auction.price, 'ether')
-      this.contractInstance.createAuction(this.$config.MYNFT_CA,
-      this.tokenid, this.auction.auctionTitle, this.metadata,
-      price, {from: this.account, gas: this.$config.GAS_AMOUNT}, (error, transactionHash) => {     
+      this.contractInstance.createAuction(this.$config.MYNFT_CA, this.tokenid, this.auction.auctionTitle, this.metadata, price, {from: this.account, gas: this.$config.GAS_AMOUNT}, (error, transactionHash) => {     
             console.log("txhash",transactionHash)            
-      })
+        })
       this.watchCreated((error, result) => {
         if(!error) alert("Creation completed...!")
       })
@@ -65,7 +64,7 @@ async mounted() {
       const currentBlock = await this.getCurrentBlock()
       const eventWatcher = this.contractInstance.AuctionCreated({}, {fromBlock: currentBlock - 1, toBlock: 'latest'})
       eventWatcher.watch(cb)
-      },
+    },
 
     getCurrentBlock() {
       return new Promise((resolve, reject ) => {

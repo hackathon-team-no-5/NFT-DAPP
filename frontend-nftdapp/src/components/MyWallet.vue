@@ -24,12 +24,12 @@
       <v-text-field
         v-model="toAddress"
         label="To Address"
-        required>
-      </v-text-field>
+        required
+      ></v-text-field>
+
       <v-btn @click="finalizeAuction" outline color="teal">Finalize</v-btn>
   </div>
 </template>
-
 <script>
   export default {
     data() {
@@ -55,6 +55,7 @@
 
     async mounted() {                             
       this.account = await this.$getDefaultAccount()      
+
       this.$web3.eth.getBalance(this.account, (error, result) => {        
         this.balance = this.$web3.fromWei(result, 'ether')
       })
@@ -78,6 +79,7 @@
           this.auctionInfo.title = result[0]
           this.auctionInfo.price = this.$web3.fromWei(result[1], 'ether')
           this.auctionInfo.tokenId = result[3]
+
           this.ciMyNFT.ownerOf(result[3], {}, (error, owner) => {
             this.auctionInfo.owner = owner
           })          
@@ -114,8 +116,8 @@
         })
       }
     }
-  }
 
+  }
 </script>
 <style scoped>  
   .containWrap {
@@ -132,4 +134,3 @@
     color: #b7afaf;
   }
 </style>
-
